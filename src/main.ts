@@ -1,7 +1,7 @@
-import { clearCache } from './helpers';
+import { clearCache } from './service/cache.service';
+import {fetchActions} from "./service/fetch.service";
 
-module.exports.loop = function () {
-  // eslint-disable-next-line no-console
-  console.log('TEST');
-  clearCache();
-};
+// This file is ran every game tick
+
+fetchActions();
+clearCache();
