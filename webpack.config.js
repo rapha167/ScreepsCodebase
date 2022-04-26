@@ -1,14 +1,16 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const path = require('path');
+import webpack from "webpack";
 
-module.exports = {
-  mode: 'development',
-  devtool: 'inline-source-map',
-  entry: {
-    main: './src/main.ts',
+export default {
+  mode: 'production',
+  target: 'es6',
+  entry: './src/main.ts',
+  parallelism: 4,
+  performance: {
+    maxEntrypointSize: 2097152,
+    hints: false,
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
+    chunkFormat: 'module',
     filename: 'main.js', // <--- Will be compiled to this single file
   },
   resolve: {
@@ -18,8 +20,12 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        loader: 'ts-loader',
+        use: 'ts-loader',
       },
     ],
   },
+  plugins: [new webpack.BannerPlugin({
+    banner: 'module.exports.loop = ',
+    raw: true
+  })]
 };
